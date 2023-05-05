@@ -16,6 +16,6 @@ def board_state():
     if 'board_occupation' not in data:
         return jsonify({"message": "Missing board_occupation"}), 400
     
-    return_state = chesslogic_module.reverse(data.get('board_occupation'))
+    return_state = chesslogic_module.legal_moves(data.get('board_occupation'))
 
     return jsonify({"return_state": return_state})
