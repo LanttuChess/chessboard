@@ -1,9 +1,8 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html")
+    return jsonify({"message": "Welcome to my REST API!"})
