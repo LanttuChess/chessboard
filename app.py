@@ -4,9 +4,28 @@ import chesslogic_module
 app = Flask(__name__)
 
 
-@app.route("/")
-def hello():
-    return "Hello World!"
+@app.route("/fen", methods=["GET"])
+def board_state_fen():
+
+    return_state = chesslogic_module.current_state_fen
+
+    return jsonify({"return_state": return_state()})
+
+
+@app.route("/unicode", methods=["GET"])
+def board_state_unicode():
+
+    return_state = chesslogic_module.current_state_unicode
+
+    return jsonify({"return_state": return_state()})
+
+
+@app.route("/raw", methods=["GET"])
+def board_state_raw():
+
+    return_state = chesslogic_module.current_state_raw
+
+    return jsonify({"return_state": return_state()})
 
 
 @app.route("/api", methods=["POST"])
