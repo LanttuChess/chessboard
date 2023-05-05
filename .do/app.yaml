@@ -1,6 +1,6 @@
-name: sample-flask
+name: chessboard
 services:
 - name: web
   github:
-    repo: digitalocean/sample-flask
+    repo: LanttuChess/chessboard
     branch: main
