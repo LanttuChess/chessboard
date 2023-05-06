@@ -10,7 +10,7 @@ def start_new_game():
 
 def current_state_fen():
      
-    board_state_string = board.fen()
+    board_state_string = board.fen ()
 
     return board_state_string
 
