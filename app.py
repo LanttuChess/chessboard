@@ -28,6 +28,16 @@ def board_state_raw():
     return jsonify({"return_state": return_state()})
 
 
+
+@app.route("/newgame", methods=["POST"])
+def new_game():
+
+    return_state = chesslogic_module.start_new_game
+
+    return jsonify({"return_state": return_state()})
+
+
+
 @app.route("/api", methods=["POST"])
 def board_state():
     data = request.get_json()

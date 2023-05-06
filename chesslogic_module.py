@@ -3,6 +3,11 @@ import chess
 board = chess.Board()
 
 
+def start_new_game():
+    board.reset()
+
+    return current_state_unicode()
+
 def current_state_fen():
      
     board_state_string = board.fen()
