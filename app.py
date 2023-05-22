@@ -57,7 +57,7 @@ def update_matrix():
     data = request.get_json()
 
     if data is None:
-        return jsonify({"message": "No data provided. Request was: " + request}), 400
+        return jsonify({"message": "No data provided. Request was: " + str(request)}), 400
 
     input_str = data.get('board_occupation')
 
