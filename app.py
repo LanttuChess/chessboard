@@ -57,12 +57,22 @@ def update_matrix():
     data = request.get_json()
 
     if data is None:
-        return jsonify({"message": "No data provided. Request was: " + str(request)}), 400
+        board = chesslogic.get_board_with_legal_moves(chesslogic.board)
+        rgb_data = board.replace('0', '000000')
+        rgb_data = rgb_data.replace('1', '0000FF')
+        
+        return jsonify({"message": "No data provided. Request was: " + str(request), 'rgb_data': rgb_data}), 400
+
 
     input_str = data.get('board_occupation')
 
     if input_str is None:
-        return jsonify({"message": "No board_occupation data is JSON."}), 400
+        board = chesslogic.get_board_with_legal_moves(chesslogic.board)
+        rgb_data = board.replace('0', '000000')
+        rgb_data = rgb_data.replace('1', '0000FF')
+        
+        return jsonify({"message": "No board_occupation data is JSON.", 'rgb_data': rgb_data}), 400
+
 
     pieces = chesslogic.get_pieces_with_legal_moves_coord(chesslogic.board)
     if input_str:
