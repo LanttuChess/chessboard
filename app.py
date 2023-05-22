@@ -121,4 +121,4 @@ def board_with_legal_moves():
     board = chesslogic.get_board_with_legal_moves(chesslogic.board)
     rgb_data = board.replace('0', '000000')
     rgb_data = rgb_data.replace('1', '0000FF')
-    return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board, 'rgb': rgb_data}), 200
+    return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board, 'rgb_data': rgb_data}), 200
