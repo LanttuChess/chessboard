@@ -55,7 +55,14 @@ def new_game():
 @app.route('/change', methods=['POST'])
 def update_matrix():
     data = request.get_json()
+
+    if data is None:
+        return jsonify({"message": "No data provided."}), 400
+
     input_str = data.get('board_occupation')
+
+    if input_str is None:
+        return jsonify({"message": "No board_occupation data is JSON."}), 400
 
     pieces = chesslogic.get_pieces_with_legal_moves_coord(chesslogic.board)
     if input_str:
