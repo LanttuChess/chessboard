@@ -59,7 +59,7 @@ def update_matrix():
     if data is None:
         board = chesslogic.get_board_with_legal_moves(chesslogic.board)
         rgb_data = board.replace('0', '000000')
-        rgb_data = rgb_data.replace('1', '0000FF')
+        rgb_data = rgb_data.replace('1', '0000FF').replace(",", "").replace("/", "")
         
         return jsonify({"message": "No data provided. Request was: " + str(request), 'rgb_data': rgb_data}), 400
 
@@ -69,7 +69,7 @@ def update_matrix():
     if input_str is None:
         board = chesslogic.get_board_with_legal_moves(chesslogic.board)
         rgb_data = board.replace('0', '000000')
-        rgb_data = rgb_data.replace('1', '0000FF')
+        rgb_data = rgb_data.replace('1', '0000FF').replace(",", "").replace("/", "")
         
         return jsonify({"message": "No board_occupation data is JSON.", 'rgb_data': rgb_data}), 400
 
@@ -86,7 +86,7 @@ def update_matrix():
 
         board = chesslogic.get_board_with_legal_moves(chesslogic.board)
         rgb_data = board.replace('0', '000000')
-        rgb_data = rgb_data.replace('1', '0000FF')
+        rgb_data = rgb_data.replace('1', '0000FF').replace(",", "").replace("/", "")
 
         return jsonify({
             'message': "Matrix updated successfully.", 
@@ -130,5 +130,5 @@ def pieces_with_legal_moves():
 def board_with_legal_moves():
     board = chesslogic.get_board_with_legal_moves(chesslogic.board)
     rgb_data = board.replace('0', '000000')
-    rgb_data = rgb_data.replace('1', '0000FF')
+    rgb_data = rgb_data.replace('1', '0000FF').replace(",", "").replace("/", "")
     return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board, 'rgb_data': rgb_data}), 200
