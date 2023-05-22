@@ -39,7 +39,6 @@ def board_state_raw():
 
 
 
-# ALL THE NEW GLORY
 initial_state = "1,1,1,1,1,1,1,1/1,1,1,1,1,1,1,1/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/1,1,1,1,1,1,1,1/1,1,1,1,1,1,1,1"
 m = MoveDetection(8, initial_state)
 
@@ -53,7 +52,7 @@ def new_game():
 
     return jsonify({"return_state": return_state()})
 
-@app.route('/update_matrix', methods=['POST'])
+@app.route('/change', methods=['POST'])
 def update_matrix():
     data = request.get_json()
     input_str = data.get('board_occupation')
