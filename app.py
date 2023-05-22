@@ -48,7 +48,7 @@ def new_game():
 
     #movedetection.reset_physical_state()
     return_state = chesslogic.start_new_game
-    m.reset()
+    m.reset(initial_state)
 
     return jsonify({"return_state": return_state()})
 

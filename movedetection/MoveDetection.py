@@ -64,8 +64,9 @@ class MoveDetection:
 
 
 
-    def reset(self):
+    def reset(self, initial_state):
         self.matrix = [[0 for _ in range(self.size)] for _ in range(self.size)]
         self.previous_matrix = None
         self.change_sum = 0
         self.minus_position = None
+        self.parse_input(initial_state)
