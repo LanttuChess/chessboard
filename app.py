@@ -99,4 +99,5 @@ def pieces_with_legal_moves():
 @app.route('/board_with_legal_moves_matrix', methods=['GET'])
 def board_with_legal_moves():
     board = chesslogic.get_board_with_legal_moves(chesslogic.board)
-    return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board}), 200
+    rgb_data = board.replace('1', 'B')
+    return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board, 'rgb': rgb_data}), 200
