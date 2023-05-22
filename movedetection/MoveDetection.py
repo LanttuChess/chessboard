@@ -45,3 +45,11 @@ class MoveDetection:
 
     def get_change_sum(self):
         return self.change_sum
+
+
+
+    def reset(self):
+        self.matrix = [[0 for _ in range(self.size)] for _ in range(self.size)]
+        self.previous_matrix = None
+        self.change_sum = 0
+        self.minus_position = None

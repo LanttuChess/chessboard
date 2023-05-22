@@ -3,74 +3,37 @@ import chesslogic.chesslogic as chesslogic
 from movedetection.MoveDetection import MoveDetection
 
 
-# move_detection = MoveDetection()
-
-
 app = Flask(__name__)
 
 
-# @app.route("/", methods=["GET"])
-# def root_message():
-#     return "Chess validator service for Intelligent Chess Board project. Please use following paths and request types: \n\n \\fen GET \n \\unicode GET \n \\raw GET \n \\api POST \n \\newgame POST \n\n for example."
+@app.route("/", methods=["GET"])
+def root_message():
+    return "Chess validator service for Intelligent Chess Board project. Please use following paths and request types: \n\n \\fen GET \n \\unicode GET \n \\raw GET \n \\api POST \n \\newgame POST \n\n for example."
 
-# @app.route("/fen", methods=["GET"])
-# def board_state_fen():
+@app.route("/fen", methods=["GET"])
+def board_state_fen():
 
-#     return_state = chesslogic.current_state_fen
+    return_state = chesslogic.current_state_fen
 
-#     return jsonify({"return_state": return_state()})
-
-
-# @app.route("/unicode", methods=["GET"])
-# def board_state_unicode():
-
-#     return_state = chesslogic.current_state_unicode
-
-#     return jsonify({"return_state": return_state()})
+    return jsonify({"return_state": return_state()})
 
 
-# @app.route("/raw", methods=["GET"])
-# def board_state_raw():
+@app.route("/unicode", methods=["GET"])
+def board_state_unicode():
 
-#     return_state = chesslogic.current_state_raw
+     return_state = chesslogic.current_state_unicode
 
-#     return jsonify({"return_state": return_state()})
-
-
-
-# @app.route("/newgame", methods=["POST"])
-# def new_game():
-
-#     #movedetection.reset_physical_state()
-#     return_state = chesslogic.start_new_game
-
-#     return jsonify({"return_state": return_state()})
+     return jsonify({"return_state": return_state()})
 
 
+@app.route("/raw", methods=["GET"])
+def board_state_raw():
 
-# @app.route("/api", methods=["POST"])
-# def board_state():
-#     data = request.get_json()
+    return_state = chesslogic.current_state_raw
 
-#     if 'board_occupation' not in data:
-#         return jsonify({"message": "Missing board_occupation"}), 400
-    
-#     return_state = chesslogic.legal_moves(data.get('board_occupation'))
-
-#     return jsonify({"return_state": return_state})
+    return jsonify({"return_state": return_state()})
 
 
-
-# @app.route("/change", methods=["POST"])
-# def state_change():
-#     data = request.get_json()
-
-#     if 'board_occupation' not in data:
-#         return jsonify({"message": "Missing board_occupation"}), 400
-    
-#     return_state = move_detection.state_change_detector(data.get('board_occupation'))
-
-#     return jsonify({"return_state": return_state})
 
 
 
@@ -80,14 +43,33 @@ app = Flask(__name__)
 initial_state = "1,1,1,1,1,1,1,1/1,1,1,1,1,1,1,1/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/0,0,0,0,0,0,0,0/1,1,1,1,1,1,1,1/1,1,1,1,1,1,1,1"
 m = MoveDetection(8, initial_state)
 
+
+@app.route("/newgame", methods=["POST"])
+def new_game():
+
+    #movedetection.reset_physical_state()
+    return_state = chesslogic.start_new_game
+    m.reset()
+
+    return jsonify({"return_state": return_state()})
+
 @app.route('/update_matrix', methods=['POST'])
 def update_matrix():
     data = request.get_json()
     input_str = data.get('board_occupation')
     if input_str:
         m.parse_input(input_str)
-        changes = m.state_change_detector()
-        return jsonify({'message': "Matrix updated successfully.", 'changes': changes}), 200
+        changes, special_cases = m.state_change_detector()
+        move_results = []
+        for case in special_cases:
+            (x_source, y_source), (x_dest, y_dest) = case
+            result = chesslogic.make_move(x_source, y_source, x_dest, y_dest)
+            move_results.append(result)
+        return jsonify({
+            'message': "Matrix updated successfully.", 
+            'changes': changes, 
+            'move_results': move_results
+        }), 200
     else:
         return {"message": "No board_occupation data provided."}, 400
 
@@ -105,3 +87,17 @@ def get_matrix():
 @app.route('/get_change_sum', methods=['GET'])
 def get_change_sum():
     return jsonify({'change_sum': m.get_change_sum()})
+
+
+
+
+@app.route('/pieces_with_legal_moves', methods=['GET'])
+def pieces_with_legal_moves():
+    pieces = chesslogic.get_pieces_with_legal_moves_coord(chesslogic.board)
+    return jsonify({'message': "Fetched pieces with legal moves successfully.", 'data': list(pieces)}), 200
+
+
+@app.route('/board_with_legal_moves_matrix', methods=['GET'])
+def board_with_legal_moves():
+    board = chesslogic.get_board_with_legal_moves(chesslogic.board)
+    return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board}), 200
