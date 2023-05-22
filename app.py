@@ -89,6 +89,11 @@ def get_change_sum():
 
 
 
+@app.route('/get_positions_with_pieces', methods=['GET'])
+def get_positions_with_pieces():
+    return jsonify({'data': m.get_positions_with_pieces()})
+
+
 
 @app.route('/pieces_with_legal_moves', methods=['GET'])
 def pieces_with_legal_moves():

@@ -1,3 +1,8 @@
+
+
+def list_to_string(data):
+    return '/'.join(','.join(map(str, row)) for row in data)
+
 class MoveDetection:
     def __init__(self, size, initial_state=None):
         self.size = size
@@ -40,8 +45,19 @@ class MoveDetection:
 
         return changes, special_cases
 
+
+
+
     def get_current_matrix(self):
         return self.matrix
+    
+    def get_positions_with_pieces(self):
+        data = self.matrix
+        return list_to_string(data)
+
+
+
+
 
     def get_change_sum(self):
         return self.change_sum
