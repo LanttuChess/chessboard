@@ -56,6 +56,8 @@ def new_game():
 def update_matrix():
     data = request.get_json()
     input_str = data.get('board_occupation')
+
+    pieces = chesslogic.get_pieces_with_legal_moves_coord(chesslogic.board)
     if input_str:
         m.parse_input(input_str)
         changes, special_cases = m.state_change_detector()
@@ -64,10 +66,16 @@ def update_matrix():
             (x_source, y_source), (x_dest, y_dest) = case
             result = chesslogic.make_move(x_source, y_source, x_dest, y_dest)
             move_results.append(result)
+
+        board = chesslogic.get_board_with_legal_moves(chesslogic.board)
+        rgb_data = board.replace('0', '000000')
+        rgb_data = rgb_data.replace('1', '0000FF')
+
         return jsonify({
             'message': "Matrix updated successfully.", 
             'changes': changes, 
-            'move_results': move_results
+            'move_results': move_results,
+            'rgb_data': rgb_data
         }), 200
     else:
         return {"message": "No board_occupation data provided."}, 400
