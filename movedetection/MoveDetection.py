@@ -58,7 +58,6 @@ class MoveDetection:
 
 
 
-
     def get_change_sum(self):
         return self.change_sum
 

@@ -116,7 +116,10 @@ def get_change_sum():
 
 @app.route('/get_positions_with_pieces', methods=['GET'])
 def get_positions_with_pieces():
-    return jsonify({'data': m.get_positions_with_pieces()})
+    positions = m.get_positions_with_pieces()
+    rgb_data = positions.replace('0', '000000')
+    rgb_data = rgb_data.replace('1', 'FFFF00').replace(",", "").replace("/", "")
+    return jsonify({'data': positions, 'rgb_data': rgb_data}), 200
 
 
 
@@ -132,3 +135,4 @@ def board_with_legal_moves():
     rgb_data = board.replace('0', '000000')
     rgb_data = rgb_data.replace('1', '0000FF').replace(",", "").replace("/", "")
     return jsonify({'message': "Fetched board with legal moves successfully.", 'data': board, 'rgb_data': rgb_data}), 200
+
