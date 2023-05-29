@@ -5,4 +5,4 @@ ESP32 board reads inputs from a chessboard and sends them to this server, and th
 
 ## Forked atop Mason Egger's project
 
-It was originally a code for deploying flask to digitalocean, and this was built atop his deployment template. 
+It was originally a code for deploying flask to digitalocean, and this was built atop his deployment template.
