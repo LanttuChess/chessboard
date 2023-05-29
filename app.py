@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def root_message():
-    return "Chess validator service for Intelligent Chess Board project. Please use following paths and request types: \n\n \\fen GET \n \\unicode GET \n \\raw GET \n \\api POST \n \\newgame POST \n\n for example."
+    return "Chess validator service for Intelligent Chess Board project."
 
 @app.route("/fen", methods=["GET"])
 def board_state_fen():
