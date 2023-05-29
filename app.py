@@ -3,6 +3,7 @@ import chesslogic.chesslogic as chesslogic
 from movedetection.MoveDetection import MoveDetection
 import services.messaging as messaging
 
+
 app = Flask(__name__)
 
 
@@ -114,5 +115,6 @@ def pieces_with_legal_moves():
 @app.route('/board_with_legal_moves_matrix', methods=['GET'])
 def board_with_legal_moves():
     board = chesslogic.get_board_with_legal_moves(chesslogic.board)
-    rgb_data = messaging.format_legal_moves
+    rgb_data = messaging.format_legal_moves()
+
     return jsonify({'message': "Fetched board with legal moves successfully.", 'matrix_data': board, 'rgb_data': rgb_data}), 200
